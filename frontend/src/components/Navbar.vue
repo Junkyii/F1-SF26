@@ -3,31 +3,8 @@
     <div class="nav-inner">
       <!-- Logo -->
       <a href="#home" class="nav-logo" @click.prevent="scrollTo('home')">
-        <div class="logo-icon">
-          <svg
-            viewBox="0 0 40 40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <!-- Prancing Horse Silhouette (simplified) -->
-            <rect width="40" height="40" rx="4" fill="#DC0000" />
-            <text
-              x="50%"
-              y="57%"
-              dominant-baseline="middle"
-              text-anchor="middle"
-              font-family="Arial"
-              font-size="22"
-              font-weight="900"
-              fill="white"
-            >
-              SF
-            </text>
-          </svg>
-        </div>
-        <div class="logo-text">
-          <span class="logo-scuderia">SCUDERIA</span>
-          <span class="logo-ferrari">FERRARI</span>
+        <div class="logo-img-container">
+          <img src="/5.png" alt="Scuderia Ferrari" class="nav-logo-img" />
         </div>
       </a>
 
@@ -147,38 +124,23 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
   text-decoration: none;
 }
 
-.logo-icon svg {
-  width: 38px;
-  height: 38px;
-  border-radius: 6px;
-}
-
-.logo-text {
+.logo-img-container {
   display: flex;
-  flex-direction: column;
-  line-height: 1;
+  align-items: center;
+  height: 42px;
+  background: transparent; /* Ensure no background */
 }
 
-.logo-scuderia {
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.55rem;
-  font-weight: 600;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: #999;
-}
-
-.logo-ferrari {
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 1.25rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: white;
+.nav-logo-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  /* Use multiply blend mode to hide white background of the logo */
+  mix-blend-mode: multiply; 
+  filter: drop-shadow(0 0 8px rgba(0,0,0,0.4));
 }
 
 /* Nav Links */
