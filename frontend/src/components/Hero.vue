@@ -1,9 +1,5 @@
 <template>
   <section id="home" class="hero">
-    <!-- Subtle animated grid -->
-    <div class="hero-grid"></div>
-    <!-- Left accent bar -->
-    <div class="hero-edge-bar"></div>
 
     <div class="hero-content container">
       <!-- Left: editorial text -->
@@ -118,38 +114,13 @@ function scrollTo(id) {
 </script>
 
 <style scoped>
-/* ── Layout ── */
 .hero {
   position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: radial-gradient(ellipse at 65% 35%, rgba(220,0,0,0.06) 0%, transparent 55%),
-              linear-gradient(160deg, #080808 0%, #0d0404 50%, #080808 100%);
-}
-
-/* Subtle grid */
-.hero-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(220,0,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(220,0,0,0.03) 1px, transparent 1px);
-  background-size: 90px 90px;
-  animation: gridScroll 30s linear infinite;
-  pointer-events: none;
-}
-@keyframes gridScroll {
-  from { transform: translateY(0); }
-  to   { transform: translateY(90px); }
-}
-
-/* Left accent */
-.hero-edge-bar {
-  position: absolute; top: 0; left: 0;
-  width: 3px; height: 100%;
-  background: linear-gradient(180deg, var(--red), rgba(220,0,0,0.08), transparent);
-  pointer-events: none;
+  background: #000;
 }
 
 /* ── Content Layout ── */
@@ -306,7 +277,7 @@ function scrollTo(id) {
   background: linear-gradient(
     to bottom,
     transparent 50%,
-    rgba(8,8,8,0.6) 100%
+    rgba(0,0,0,0.7) 100%
   );
   pointer-events: none;
 }
@@ -339,9 +310,8 @@ function scrollTo(id) {
 /* ── Stats Bar ── */
 .hero-stats {
   position: relative; z-index: 1;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  background: rgba(0,0,0,0.85);
   padding: 1.5rem 0;
 }
 .stats-row {

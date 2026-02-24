@@ -1,7 +1,5 @@
 <template>
   <section id="car" class="car-section">
-    <div class="car-bg-accent"></div>
-
     <div class="container">
       <!-- Header -->
       <div class="car-header">
@@ -18,8 +16,6 @@
 
       <!-- Real SF-26 photograph -->
       <div class="car-photo-wrap">
-        <div class="photo-glow-left"></div>
-        <div class="photo-glow-right"></div>
         <img
           src="/sf26.png"
           alt="Ferrari SF-26 — 2026 Formula 1 car"
@@ -27,7 +23,6 @@
           @load="imgLoaded = true"
           :class="{ visible: imgLoaded }"
         />
-        <div class="photo-reflection"></div>
 
         <!-- Floating info chips -->
         <div class="chip chip-tl">
@@ -166,18 +161,9 @@ onMounted(fetchCar)
 
 <style scoped>
 .car-section {
-  background: var(--black);
+  background: #000;
   padding: 7rem 0 5rem;
   position: relative;
-  overflow: hidden;
-}
-
-.car-bg-accent {
-  position: absolute;
-  top: 10%; right: -10%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(220,0,0,0.04) 0%, transparent 65%);
-  pointer-events: none;
 }
 
 /* Header */
@@ -243,26 +229,8 @@ onMounted(fetchCar)
   justify-content: center;
   min-height: 380px;
   border-radius: 20px;
-  background: linear-gradient(180deg, rgba(220,0,0,0.04) 0%, transparent 60%);
-  border: 1px solid rgba(255,255,255,0.04);
+  background: transparent;
   overflow: visible;
-}
-
-.photo-glow-left {
-  position: absolute;
-  left: 5%; top: 20%;
-  width: 300px; height: 200px;
-  background: radial-gradient(ellipse, rgba(220,0,0,0.15) 0%, transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
-}
-.photo-glow-right {
-  position: absolute;
-  right: 5%; top: 20%;
-  width: 300px; height: 200px;
-  background: radial-gradient(ellipse, rgba(220,0,0,0.12) 0%, transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
 }
 
 .car-photo {
@@ -275,29 +243,11 @@ onMounted(fetchCar)
   position: relative;
   z-index: 1;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-  filter: drop-shadow(0 30px 60px rgba(220,0,0,0.3));
-  animation: carFloat 5s ease-in-out infinite;
+  transition: opacity 0.8s var(--ease);
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
 }
 .car-photo.visible {
   opacity: 1;
-  transform: translateY(0);
-}
-
-@keyframes carFloat {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
-}
-
-/* Reflection under car */
-.photo-reflection {
-  position: absolute;
-  bottom: -20px; left: 10%; right: 10%;
-  height: 60px;
-  background: radial-gradient(ellipse at center, rgba(220,0,0,0.12) 0%, transparent 70%);
-  filter: blur(20px);
-  pointer-events: none;
 }
 
 /* Floating chips */

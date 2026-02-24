@@ -30,12 +30,19 @@
 
             <!-- Identity -->
             <div class="panel-identity">
-              <div class="identity-badge">
-                <span class="badge-flag">{{ driver.flag }}</span>
-                <span class="badge-nat">{{ driver.nationality }}</span>
+              <div class="identity-content">
+                <div class="driver-photo-frame">
+                  <img :src="driver.photo" :alt="driver.name" class="driver-photo" loading="lazy" />
+                </div>
+                <div class="driver-info">
+                  <div class="identity-badge">
+                    <span class="badge-flag">{{ driver.flag }}</span>
+                    <span class="badge-nat">{{ driver.nationality }}</span>
+                  </div>
+                  <h3 class="driver-name">{{ driver.name }}</h3>
+                  <p class="driver-bio-short">{{ driver.bio_short }}</p>
+                </div>
               </div>
-              <h3 class="driver-name">{{ driver.name }}</h3>
-              <p class="driver-bio-short">{{ driver.bio_short }}</p>
             </div>
 
             <!-- Quick stats -->
@@ -224,8 +231,39 @@ onMounted(fetchDrivers)
   user-select: none;
 }
 
-/* Identity (name + short bio) — left col, rows 1-2 */
 .panel-identity { grid-column: 1; grid-row: 1 / 3; }
+
+.identity-content {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.driver-photo-frame {
+  flex-shrink: 0;
+  width: 140px;
+  height: 140px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: var(--dark-3);
+  position: relative;
+}
+
+.driver-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+
+.driver-panel:hover .driver-photo {
+  transform: scale(1.1);
+}
+
+.driver-info {
+  flex: 1;
+}
 
 .identity-badge {
   display: flex; align-items: center; gap: 0.5rem;
@@ -396,17 +434,21 @@ onMounted(fetchDrivers)
 
 @media (max-width: 900px) {
   .panel-top { grid-template-columns: 1fr; grid-template-rows: auto; }
-  .panel-identity { grid-row: 1; }
+  .panel-identity { grid-row: 1; margin-bottom: 2rem; }
+  .identity-content { flex-direction: column; text-align: center; gap: 1.5rem; }
+  .identity-badge { justify-content: center; }
+  
   .panel-stats {
     grid-column: 1; grid-row: 2;
     flex-direction: row; flex-wrap: wrap; gap: 0.5rem;
+    justify-content: center;
     min-width: unset;
   }
   .stat-block { flex-direction: column; border-bottom: none; padding-bottom: 0; align-items: center; min-width: 70px; }
-  .panel-meta { grid-row: 3; }
+  .panel-meta { grid-row: 3; justify-content: center; }
   .bio-toggle { grid-row: 4; }
   .bio-sections { grid-template-columns: 1fr; }
-  .panel-number { font-size: 5rem; right: 1rem; }
+  .panel-number { font-size: 5rem; right: 1rem; top: 1rem; }
 }
 @media (max-width: 480px) {
   .panel-top, .panel-bio { padding-left: 1.25rem; padding-right: 1.25rem; }

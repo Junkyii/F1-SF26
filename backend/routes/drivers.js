@@ -17,6 +17,7 @@ const drivers = [
     fastest_laps: 12,
     team_joined: 2019,
     career_start: 2018,
+    photo: '/leclerc.png',
     bio_short: 'Charles Marc Hervé Perceval Leclerc is a Monégasque racing driver who competes in Formula 1 for Scuderia Ferrari HP. Known for his exceptional qualifying pace and precise racecraft, Leclerc is regarded as one of the finest talents of his generation.',
     biography: [
       {
@@ -52,6 +53,7 @@ const drivers = [
     fastest_laps: 67,
     team_joined: 2025,
     career_start: 2007,
+    photo: '/hamilton.png',
     bio_short: 'Sir Lewis Carl Davidson Hamilton MBE is a British racing driver and seven-time Formula One World Champion — the most decorated driver in the history of the sport. In 2025, he made the most anticipated transfer in motorsport history, joining Scuderia Ferrari HP alongside Charles Leclerc.',
     biography: [
       {
