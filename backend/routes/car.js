@@ -5,6 +5,12 @@ const car = {
   model: 'SF-26',
   year: 2026,
   tagline: 'THE FUTURE IS RED',
+  images: [
+    '/sf26.png',
+    '/1.png',
+    '/2.png',
+    '/3.png'
+  ],
   chassis: 'Full carbon fibre monocoque with advanced composite structure',
   engine: {
     name: 'Ferrari 066/14',

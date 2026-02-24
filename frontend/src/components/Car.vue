@@ -14,32 +14,72 @@
         </div>
       </div>
 
-      <!-- Real SF-26 photograph -->
-      <div class="car-photo-wrap">
-        <img
-          src="/sf26.png"
-          alt="Ferrari SF-26 — 2026 Formula 1 car"
-          class="car-photo"
-          @load="imgLoaded = true"
-          :class="{ visible: imgLoaded }"
-        />
+      <!-- Car Gallery Carousel -->
+      <div class="car-gallery-wrap">
+        <button 
+          class="nav-btn prev" 
+          @click="prevImg" 
+          aria-label="Previous image"
+          v-if="car.images && car.images.length > 1"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
 
-        <!-- Floating info chips -->
-        <div class="chip chip-tl">
-          <span class="chip-val">1,200+</span>
-          <span class="chip-label">Horsepower</span>
+        <div class="car-photo-container">
+          <transition name="photo-fade" mode="out-in">
+            <div class="car-photo-wrap" :key="currentImg">
+              <img
+                :src="currentImg"
+                :alt="`Ferrari SF-26 — Image ${currentImgIndex + 1}`"
+                class="car-photo"
+                @load="onImgLoad"
+                :class="{ visible: imgLoaded }"
+              />
+
+              <!-- Floating info chips (only show for main SF-26 image if desired, or all) -->
+              <div class="chip chip-tl">
+                <span class="chip-val">1,200+</span>
+                <span class="chip-label">Horsepower</span>
+              </div>
+              <div class="chip chip-tr">
+                <span class="chip-val">768 kg</span>
+                <span class="chip-label">Min Weight</span>
+              </div>
+              <div class="chip chip-bl">
+                <span class="chip-val">#16 · #44</span>
+                <span class="chip-label">Drivers</span>
+              </div>
+              <div class="chip chip-br">
+                <span class="chip-val">Active</span>
+                <span class="chip-label">Aerodynamics</span>
+              </div>
+            </div>
+          </transition>
         </div>
-        <div class="chip chip-tr">
-          <span class="chip-val">768 kg</span>
-          <span class="chip-label">Min Weight</span>
-        </div>
-        <div class="chip chip-bl">
-          <span class="chip-val">#16 · #44</span>
-          <span class="chip-label">Drivers</span>
-        </div>
-        <div class="chip chip-br">
-          <span class="chip-val">Active</span>
-          <span class="chip-label">Aerodynamics</span>
+
+        <button 
+          class="nav-btn next" 
+          @click="nextImg" 
+          aria-label="Next image"
+          v-if="car.images && car.images.length > 1"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Indicators -->
+        <div class="gallery-indicators" v-if="car.images && car.images.length > 1">
+          <button 
+            v-for="(_, i) in car.images" 
+            :key="i"
+            class="indicator-dot"
+            :class="{ active: i === currentImgIndex }"
+            @click="setImg(i)"
+            :aria-label="`Go to image ${i + 1}`"
+          ></button>
         </div>
       </div>
 
@@ -87,6 +127,35 @@ import axios from 'axios'
 
 const car = ref({})
 const imgLoaded = ref(false)
+const currentImgIndex = ref(0)
+
+const currentImg = computed(() => {
+  if (car.value.images && car.value.images.length > 0) {
+    return car.value.images[currentImgIndex.value]
+  }
+  return '/sf26.png'
+})
+
+function onImgLoad() {
+  imgLoaded.value = true
+}
+
+function nextImg() {
+  if (!car.value.images) return
+  imgLoaded.value = false
+  currentImgIndex.value = (currentImgIndex.value + 1) % car.value.images.length
+}
+
+function prevImg() {
+  if (!car.value.images) return
+  imgLoaded.value = false
+  currentImgIndex.value = (currentImgIndex.value - 1 + car.value.images.length) % car.value.images.length
+}
+
+function setImg(index) {
+  imgLoaded.value = false
+  currentImgIndex.value = index
+}
 
 const perfItems = computed(() => car.value.performance ? [
   { val: car.value.performance.top_speed,    label: 'Top Speed'   },
@@ -143,6 +212,7 @@ async function fetchCar() {
     car.value = {
       model: 'SF-26', year: 2026,
       tagline: 'THE FUTURE IS RED',
+      images: ['/sf26.png', '/1.png', '/2.png', '/3.png'],
       engine: { name: 'Ferrari 066/14', type: 'V6 Turbo Hybrid', displacement: '1.6L', power: '1,200+ hp', rpm_limit: '15,000 RPM', ers_power: '350 kW', fuel_type: '100% Sustainable Fuel' },
       aerodynamics: { concept: 'Active Aerodynamics', front_wing: 'Active multi-element carbon', rear_wing: 'Active automated angle wing', underfloor: 'Venturi tunnel ground effect', drag_reduction: 'Active aero system' },
       dimensions: { length: '5,400 mm', width: '1,900 mm' },
@@ -151,7 +221,7 @@ async function fetchCar() {
       transmission: { gearbox: '8-speed semi-auto' },
       tyres: { supplier: 'Pirelli', size: '18-inch' },
       performance: { top_speed: '380+ km/h', zero_to_100: '2.2 s' },
-      highlights: ['First Ferrari under 2026 regs','1,200hp hybrid power unit','Active aerodynamics','100% Sustainable Fuel','Narrower lighter chassis','Hamilton & Leclerc']
+      highlights: ['First Ferrari under 2026 regs', '1,200hp hybrid power unit', 'Active aerodynamics', '100% Sustainable Fuel', 'Narrower lighter chassis', 'Hamilton & Leclerc']
     }
   }
 }
@@ -220,34 +290,114 @@ onMounted(fetchCar)
   color: rgba(255,255,255,0.3);
 }
 
-/* ── Car Photo ── */
-.car-photo-wrap {
+/* ── Car Gallery ── */
+.car-gallery-wrap {
   position: relative;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1.5rem;
+}
+
+.car-photo-container {
+  flex: 1;
+  max-width: 900px;
+  position: relative;
   min-height: 380px;
-  border-radius: 20px;
-  background: transparent;
-  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-photo-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn {
+  background: rgba(10,10,10,0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  flex-shrink: 0;
+  z-index: 5;
+}
+.nav-btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(220,0,0,0.2);
 }
 
 .car-photo {
   width: 100%;
-  max-width: 900px;
-  max-height: 460px;
+  max-width: 850px;
+  max-height: 440px;
   object-fit: contain;
   display: block;
   margin: 0 auto;
   position: relative;
   z-index: 1;
   opacity: 0;
-  transition: opacity 0.8s var(--ease);
   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+  transition: opacity 0.5s ease;
 }
 .car-photo.visible {
   opacity: 1;
+}
+
+/* Indicators */
+.gallery-indicators {
+  position: absolute;
+  bottom: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6rem;
+  z-index: 5;
+}
+
+.indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s var(--ease);
+  padding: 0;
+}
+.indicator-dot.active {
+  background: var(--red);
+  width: 24px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(220,0,0,0.3);
+}
+
+/* Transitions */
+.photo-fade-enter-active,
+.photo-fade-leave-active {
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.photo-fade-enter-from {
+  opacity: 0;
+  transform: scale(0.98);
+}
+.photo-fade-leave-to {
+  opacity: 0;
+  transform: scale(1.02);
 }
 
 /* Floating chips */
@@ -264,13 +414,14 @@ onMounted(fetchCar)
   border-radius: 10px;
   gap: 0.1rem;
   transition: var(--transition);
+  pointer-events: auto;
 }
 .chip:hover { border-color: var(--border-red); transform: scale(1.05); }
 
-.chip-tl { top: 2rem; left: 2rem; }
-.chip-tr { top: 2rem; right: 2rem; }
-.chip-bl { bottom: 2rem; left: 2rem; }
-.chip-br { bottom: 2rem; right: 2rem; }
+.chip-tl { top: -1rem; left: 0; }
+.chip-tr { top: -1rem; right: 0; }
+.chip-bl { bottom: -1rem; left: 0; }
+.chip-br { bottom: -1rem; right: 0; }
 
 .chip-val {
   font-family: var(--font-display);
@@ -400,11 +551,13 @@ onMounted(fetchCar)
   .perf-strip { grid-template-columns: repeat(3,1fr); }
   .highlights-grid { grid-template-columns: repeat(2,1fr); }
   .chip-bl, .chip-br { display: none; }
+  .nav-btn { width: 40px; height: 40px; }
 }
 @media (max-width: 580px) {
-  .car-photo-wrap { min-height: 220px; }
+  .car-photo-container { min-height: 220px; }
   .chip-tl, .chip-tr { display: none; }
   .perf-strip { grid-template-columns: repeat(2,1fr); }
   .highlights-grid { grid-template-columns: 1fr; }
+  .car-gallery-wrap { gap: 0.5rem; }
 }
 </style>
