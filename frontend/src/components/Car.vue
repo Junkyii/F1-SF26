@@ -206,7 +206,7 @@ const specGroups = computed(() => car.value.engine ? [
 
 async function fetchCar() {
   try {
-    const res = await axios.get('http://localhost:3001/api/car')
+    const res = await axios.get('/api/car')
     car.value = res.data.data
   } catch {
     car.value = {

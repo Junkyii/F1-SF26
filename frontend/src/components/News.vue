@@ -66,7 +66,7 @@ function tagClass(tag) {
 
 async function fetchNews() {
   try {
-    const res = await axios.get('http://localhost:3001/api/news')
+    const res = await axios.get('/api/news')
     news.value = res.data.data
   } catch {
     news.value = [

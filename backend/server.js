@@ -24,12 +24,14 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", team: "Scuderia Ferrari", year: 2024 });
 });
 
-// Serve frontend build in production
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
-});
+// Note: Serving frontend static files is handled by vercel.json in production.
+// This local serving logic remains for local development if needed, 
+// but we'll export the app for Vercel.
 
-app.listen(PORT, () => {
-  console.log(`🔴 Ferrari F1 API running on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🔴 Ferrari F1 API running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

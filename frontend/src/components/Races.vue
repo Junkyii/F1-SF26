@@ -86,7 +86,7 @@ function shortGPName(fullName) {
 
 async function fetchRaces() {
   try {
-    const res = await axios.get('http://localhost:3001/api/races')
+    const res = await axios.get('/api/races')
     races.value = res.data.data
   } catch {
     races.value = []

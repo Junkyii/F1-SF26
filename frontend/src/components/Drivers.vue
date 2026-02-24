@@ -140,7 +140,7 @@ function toggleBio(id) {
 
 async function fetchDrivers() {
   try {
-    const res = await axios.get('http://localhost:3001/api/drivers')
+    const res = await axios.get('/api/drivers')
     drivers.value = res.data.data
   } catch {
     drivers.value = []
