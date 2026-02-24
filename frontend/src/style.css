@@ -10,9 +10,9 @@
   --red-glow:    rgba(220, 0, 0, 0.35);
   --gold:        #C9A84C;
   --gold-light:  #E8C97A;
-  --black:       #080808;
-  --dark:        #0f0f0f;
-  --dark-2:      #161616;
+  --black:       #000000; 
+  --dark:        #050505;
+  --dark-2:      #0a0a0a;
   --dark-3:      #1e1e1e;
   --surface:     #1a1a1a;
   --border:      rgba(255,255,255,0.07);
@@ -22,10 +22,9 @@
   --text-dim:    rgba(237,232,227,0.45);
   --white:       #ffffff;
 
-  /* Font system — Ferro Rosso for display, Outfit for body */
-  --font-display: 'Ferro Rosso', Georgia, serif;  /* Ferrari brand headlines */
-  --font-body:    'Outfit', system-ui, sans-serif; /* Body text — clean, geometric */
-  --font-mono:    'DM Mono', 'Courier New', monospace; /* Numbers, codes */
+  --font-display: 'Ferro Rosso', Georgia, serif;  
+  --font-body:    'Outfit', system-ui, sans-serif; 
+  --font-mono:    'DM Mono', 'Courier New', monospace; 
 
   --radius:      14px;
   --radius-sm:   8px;
@@ -47,22 +46,20 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--black);
+  background: var(--black); 
+  background-image: none !important; 
   color: var(--text);
   overflow-x: hidden;
   line-height: 1.65;
   letter-spacing: 0.01em;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--dark); }
 ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
 
-/* Selection */
 ::selection { background: rgba(220,0,0,0.25); color: white; }
 
-/* Typography scale */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 700;
@@ -73,7 +70,6 @@ h1, h2, h3, h4, h5, h6 {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 
-/* ── Utility ── */
 .container {
   max-width: 1300px;
   margin: 0 auto;
@@ -167,7 +163,7 @@ img { max-width: 100%; display: block; }
 
 .card {
   background: var(--dark-2);
-  border: 1px solid var(--border);
+  border: none; 
   border-radius: var(--radius);
   overflow: hidden;
   transition: var(--transition);
@@ -178,7 +174,6 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(220,0,0,0.08);
 }
 
-/* ── Animations ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -205,7 +200,6 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius-sm);
 }
 
-/* ── Sections ── */
 section { padding: 7rem 0; }
 
 @media (max-width: 768px) {
