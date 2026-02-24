@@ -1,0 +1,214 @@
+/* ============================================================
+   Ferrari F1 — Global Design System (v3 — Ferro Rosso Edition)
+   ============================================================ */
+@import url('https://fonts.cdnfonts.com/css/ferro-rosso');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --red:         #DC0000;
+  --red-dark:    #a30000;
+  --red-glow:    rgba(220, 0, 0, 0.35);
+  --gold:        #C9A84C;
+  --gold-light:  #E8C97A;
+  --black:       #080808;
+  --dark:        #0f0f0f;
+  --dark-2:      #161616;
+  --dark-3:      #1e1e1e;
+  --surface:     #1a1a1a;
+  --border:      rgba(255,255,255,0.07);
+  --border-red:  rgba(220,0,0,0.2);
+  --text:        #ede8e3;
+  --text-muted:  #7a7370;
+  --text-dim:    rgba(237,232,227,0.45);
+  --white:       #ffffff;
+
+  /* Font system — Ferro Rosso for display, Outfit for body */
+  --font-display: 'Ferro Rosso', Georgia, serif;  /* Ferrari brand headlines */
+  --font-body:    'Outfit', system-ui, sans-serif; /* Body text — clean, geometric */
+  --font-mono:    'DM Mono', 'Courier New', monospace; /* Numbers, codes */
+
+  --radius:      14px;
+  --radius-sm:   8px;
+  --radius-xs:   5px;
+
+  --ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition:  0.35s var(--ease);
+  --transition-fast: 0.2s var(--ease);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+/* Selection */
+::selection { background: rgba(220,0,0,0.25); color: white; }
+
+/* Typography scale */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ── Utility ── */
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1.5px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+.section-title span { color: var(--red); font-style: normal; }
+.section-title em   { color: var(--gold); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 2rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.06);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn:hover::after { opacity: 1; }
+
+.btn-primary {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+  box-shadow: 0 4px 20px rgba(220,0,0,0.2);
+}
+.btn-primary:hover {
+  background: transparent;
+  color: var(--red);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(220,0,0,0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(255,255,255,0.18);
+}
+.btn-outline:hover {
+  border-color: var(--red);
+  color: var(--red);
+  transform: translateY(-2px);
+}
+
+.card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: var(--transition);
+}
+.card:hover {
+  border-color: var(--border-red);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(220,0,0,0.08);
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220,0,0,0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(220,0,0,0); }
+}
+
+.fade-up { animation: fadeUp 0.65s var(--ease) both; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--dark-3) 25%, var(--dark-2) 50%, var(--dark-3) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Sections ── */
+section { padding: 7rem 0; }
+
+@media (max-width: 768px) {
+  section { padding: 4rem 0; }
+  .container { padding: 0 1.25rem; }
+}
